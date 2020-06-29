@@ -1,0 +1,98 @@
+<html>
+<head>
+<title>VUE</title>
+<!-- 开发环境版本，包含了有帮助的命令行警告 -->
+<script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+</head>
+<body>
+<div id="app">
+    {{ message }}{{ message2 }}
+</div>
+
+<div id="app-2">
+    <span v-bind:title="message">
+        title="message"
+    </span>
+</div>
+
+<div id="app-3">
+    <p v-if="seen">现在你11看到我了</p>
+</div>
+
+<div id="app-4">
+    <ol>
+        <li v-for="todo in todos">
+        {{ todo.text }}
+        </li>
+    </ol>
+</div>
+
+<div id="app-5">
+    <p>{{ message }}</p>
+    <button v-on:click="reverseMessage">反转消息</button>
+</div>
+
+<div id="app-6">
+    <p>{{ message }}</p>
+    <input v-model="message">
+</div>
+
+</body>
+
+
+<SCript>
+var app = new Vue({
+    el: '#app',
+    data: {
+      message: 'DMC',
+      message2: ' V2'
+    }
+})
+
+var app2 = new Vue({
+  el: '#app-2',
+  data: {
+    message: '页面加载于 ' + new Date().toLocaleString()
+  }
+})
+
+var app3 = new Vue({
+  el: '#app-3',
+  data: {
+    seen: true
+  }
+})
+
+//在控制台里，输入 app4.todos.push({ text: '新项目' })
+var app4 = new Vue({
+  el: '#app-4',
+  data: {
+    todos: [
+      { text: '1' },
+      { text: '2' },
+      { text: '3' }
+    ]
+  }
+})
+
+var app5 = new Vue({
+  el: '#app-5',
+  data: {
+    message: 'set dmc!'
+  },
+  methods: {
+    reverseMessage: function () {
+      this.message = this.message.split('').reverse().join('')
+      alert("asd");
+    }
+  }
+})
+
+var app6 = new Vue({
+  el: '#app-6',
+  data: {
+    message: '输入name!'
+  }
+})
+</SCript>
+</html>

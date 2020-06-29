@@ -1,0 +1,73 @@
+<html>
+<head>
+<title>Vue 入门</title>
+</head>
+<body>
+ 
+<!-- 1.引入开发环境版本，包含了有帮助的命令行警告 -->
+<script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+<!--1.创建HTML结构-->
+<div id="app">
+    <div id="notebook">
+        请输入所要记录的内容：
+        <input type="text" v-model="textMsg" @keyup.enter="addMsg(textMsg)">
+        <ul>
+            <!-- 当textArr[]中有数据时，使用v-for指令进行循环输出 -->
+            <li v-for="(item,index) in textArr">
+                {{ index+1 }}. {{ item }}
+                <input type="button" value="×" @click="del(index)" >
+            </li>
+            <label v-show="isShow">总条数：{{ count }}</label>
+            <input type="button" value="清空所有" v-show="isShow" @click="delAll">
+        </ul>
+    </div>
+</div>
+<script>
+    //3.创建Vue实例
+    var app = new Vue({
+        el:"#app",
+        data:{
+            //定义一个数组，添加三个数据
+           textArr:[
+               
+           ],
+           textMsg:"",
+           count:"0",
+           isShow:false, 
+           content:""
+        },
+        methods: {
+            //当触发键盘回车键时，将输入框中的内容添加进textArr[]，同时清空输入框
+            addMsg:function(textMsg){
+                //确保textMsg有值且去掉头尾空格
+                if(textMsg!=null&&textMsg.trim()){
+                    if(this.isShow==false){
+                        this.isShow = !this.isShow;
+                    }
+                    this.count = this.textArr.push(textMsg);
+                    this.textMsg="";
+                }else{
+                    alert("请输入内容");
+                }
+                
+            },
+            //用于删除数组中的内容
+            del:function(index){
+                console.log(index);
+                if(this.count==1){
+                    this.isShow = false;
+                }
+                this.textArr.splice(index,1);
+                this.count--;
+            },
+            //清空数组中所有元素
+            delAll:function(){
+                this.textArr = [];
+                this.isShow =!this.isShow;
+            }
+        },
+        
+    })
+</script>
+</body>
+</html>

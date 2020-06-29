@@ -1,0 +1,110 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html lang="en">
+<head>
+<title>login</title>
+<jsp:include page="/views/common/common.jsp" flush="true"/>
+<script type="text/javascript" src="${ctx}/js/jBox/jquery.jBox-2.3.js"></script>
+<link id="skin" rel="stylesheet" href="${ctx}/css/jBox/Skins/ShareBlue/jbox.css" />
+</head>
+<body role="document" style="padding-top: 0px;">
+<div class="container" role="main">
+<div class="row">
+    <div class="col-md-11">
+      	    <div class="panel-body" style="padding-top: 0%;">
+      	    	<form class="form-horizontal" id="loginForm" name="loginForm" action="${ctx}/account/login" method="post" node-type="form">
+  		                            <div class="form-group"> 
+    		                            <!-- <label class="col-sm-2 control-label">email賬號</label> -->
+    		                            <div class="col-sm-8 col-md-offset-2 col-sm-offset-2 dmc-login" >
+    		                                <img src="${ctx}/images/login-top.png" class="img-responsive" alt="Responsive image"/>
+    				                        <input class="form-control" id="login"  name="login" type="text" maxlength="50" placeholder="請輸入數位會員帳號Email"/>
+                                            <input type="hidden" id="client_id"     name="client_id"     value="${client_id}"/>
+                                            <input type="hidden" id="response_type" name="response_type" value="${response_type}"/>
+                                            <input type="hidden" id="redirect_uri"  name="redirect_uri"  value="${redirect_uri}"/>
+                                            <input type="hidden" id="state"         name="state"         value="${state}"/>
+                                            <input type="hidden" id="scope"         name="scope"         value="${scope}"/>
+                                            <input type="hidden" id="device"        name="device"        value="${device}"/>
+    				                        <input type="hidden" id="action"        name="action"        value="login"/>
+    		                            </div>
+  		                            </div>
+  		                            <div class="form-group">
+    		                            <!-- <label class="col-sm-2 control-label">密碼</label> -->
+    		                            <div class="col-sm-8 col-md-offset-2 col-sm-offset-2 dmc-login" >
+    				                        <input  class="form-control" id="password" name="password" type="password"  maxlength="50" placeholder="請輸入密碼"/>
+    		                            </div>
+  		                            </div>
+  		                            
+  		                            <div class="form-group">
+    		                            <!-- <label class="col-sm-2 control-label">驗證碼</label> -->
+    		                            <div class="col-sm-8 col-md-offset-2 col-sm-offset-2 dmc-login">
+    				                        <input style="width: 50%;display: inline-block;" id="captchaValue" class="form-control" name="captchaValue" type="text"  maxlength="4" placeholder="請輸入驗證碼" />
+                            	            <img style="width: 39%;height: 45px;border-radius: 8px;display: inline-block;margin-top:7px\9;cursor:pointer;" onclick="javascript:changeImg();" class="img-rounded" src="${ctx}/account/authImage" id="authImage" />
+  		                                </div>
+  		                            </div>
+  		                            
+  		                            <div class="form-group" style="margin-bottom: 10px;">
+   		                                <div class="col-sm-8 col-md-offset-2 col-sm-offset-2 dmc-login">
+   		                                    <button  id="loginSubmit" type="button" class="btn btn-info btn-lg btn-block">登入</button>
+   		                                </div>
+  		                            </div>
+  		                            
+  		                            <div class="form-group">
+   		                                <div class="col-sm-8 col-md-offset-2 col-sm-offset-2 dmc-login">
+   		                                    <div style="margin-left: 3.5%;">
+	   				                            <div class="col-sm-2 otherloginImg" style="margin-left: 1%;margin-top:1%;">
+	   				                                <img onclick="goFBLogin();" src="${ctx}/images/login_fb_2.png" class="img-responsive" alt="Responsive image" style="cursor:pointer;"/>
+	   				                            </div>
+	   				                            <div class="col-sm-2 otherloginImg" style="margin-left: 1%;margin-top:1%">
+	   				                                <img onclick="goGGLogin();" src="${ctx}/images/login_gg_2.png" class="img-responsive" alt="Responsive image" style="cursor:pointer;"/>
+	   				                            </div>
+	   				                            <div class="col-sm-2 otherloginImg" style="margin-left: 1%;margin-top:1%">
+	   				                                <img onclick="goLineLogin();" src="${ctx}/images/login_line_2.png" class="img-responsive" alt="Responsive image" style="cursor:pointer;"/>
+	   				                            </div>
+   		                                    </div>
+   		                                </div>
+  		                            </div>
+  		                            
+  		                            <div class="form-group">
+    		                            <div class="col-sm-8 col-md-offset-2 col-sm-offset-2">
+    				                        <a style="margin-left:  6%;text-align: left; float: left; padding-left: 1%;font-size: 15px;color: #004ea2 ;font-weight: 700;cursor:pointer;" id="label_forgetpassword">我忘記密碼了....</a>
+    				                        <a style="margin-right: 6%;text-align: right;float: right;padding-left: 1%;font-size: 15px;color: #004ea2 ;font-weight: 700;" href="${ctx }/account/goCheckBindForRegister" id="label_register">我要申請數位會員</a>
+    				                        <%-- <c:choose>
+										        <c:when test="${device != '9'}"> 
+						                        </c:when>
+									         </c:choose> --%>
+  		                                </div>
+  		                            </div>
+      	    	</form>
+            </div>
+    </div>
+</div>
+
+</div>
+
+<div id="dialog_login_password_error" class="modal fade" style="line-height: 1;">    
+    <div class="modal-dialog">  
+        <div class="row pop_up_div" style="position: relative;height: auto;background-size: 100% auto;text-align: center;margin:0 auto;">  
+            <img class="img-responsive" src="${ctx}/images/dialog_doubt.png" style="max-width: 100%;"/>  
+            <div id="pop_up_id" class="pop_up_class_login" style="position: absolute;width: 100%;">
+                <p class="pop_up_p">&nbsp;&nbsp;&nbsp;&nbsp;密碼錯誤了!是忘記密碼了嗎?</p>  
+                <p class="pop_up_p">沒關係!可以點選忘記密碼，讓小樂協助您收到新密碼喔!</p>  
+                <button id="button_login_password_error" class="btn btn-info pop_up_button" type="submit" style="background: #004ea2;">確定</button>
+            </div>  
+        </div>  
+    </div><!-- /.modal-dialog -->  
+</div><!-- /.modal -->  
+
+<div id="dialog_login_email_not_found" class="modal fade" style="line-height: 1;">    
+    <div class="modal-dialog">  
+        <div class="row pop_up_div" style="position: relative;height: auto;background-size: 100% auto;text-align: center;margin:0 auto;">  
+            <img class="img-responsive" src="${ctx}/images/dialog_amazed.png" style="max-width: 100%;"/>  
+            <div id="pop_up_id" class="pop_up_class_login" style="position: absolute;width: 100%;">
+                <p class="pop_up_p">&nbsp;&nbsp;&nbsp;&nbsp;這個Email還沒有註冊過數位會員喔!</p>  
+                <p class="pop_up_p">趕快加入註冊!</p>  
+                <button id="button_login_email_not_found" class="btn btn-info pop_up_button" type="submit" style="background: #004ea2;">確定</button>
+            </div>  
+        </div>  
+    </div><!-- /.modal-dialog -->  
+</div><!-- /.modal -->  
+<jsp:include page="/views/common/bottom.jsp" flush="true"/>
+</body>
+</html>
